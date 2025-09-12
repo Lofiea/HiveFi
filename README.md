@@ -24,7 +24,7 @@ Support for multi-currency trips, expense categories, and breakdowns
 
 # Tech Stack
 
-Language: Java 17
+Language: Java 24 (was originally 17 but I tweaked to Java 24)
 
 Database: SQLite (via JDBC: https://github.com/xerial/sqlite-jdbc)
 
@@ -56,3 +56,4 @@ HiveFi/
 │       └── utils/...
 └── README.md
 ```
+
