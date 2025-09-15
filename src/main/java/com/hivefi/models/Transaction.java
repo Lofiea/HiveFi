@@ -10,18 +10,19 @@ public class Transaction {
 
     public enum Action { CREATE, UPDATE, DELETE }
 
-    private final String id;          
-    private final Action action;       
-    private final String expenseId;    
-    private final String category;  
-    private final String currency;    
-    private final double amount;       
-    private final String date;         
-    private final String description;  
-    private final String timestamp;   
-    private final String prevHash;     
-    private final String txHash;       
+    private final String id;
+    private final Action action;
+    private final String expenseId;
+    private final String category;
+    private final String currency;
+    private final double amount;
+    private final String date;
+    private final String description;
+    private final String timestamp;
+    private final String prevHash;
+    private final String txHash;
 
+    /** Build a new CREATE/UPDATE/DELETE record from an Expense snapshot. */
     public Transaction(Action action, Expense expense, String prevHash) {
         this.id          = UUID.randomUUID().toString();
         this.action      = action;
@@ -34,6 +35,23 @@ public class Transaction {
         this.timestamp   = Instant.now().toString();
         this.prevHash    = prevHash == null ? "" : prevHash;
         this.txHash      = computeHash();
+    }
+
+    /** Build from DB row. */
+    public Transaction(String id, Action action, String expenseId, String category, String currency,
+                       double amount, String date, String description, String timestamp,
+                       String prevHash, String txHash) {
+        this.id = id;
+        this.action = action;
+        this.expenseId = expenseId;
+        this.category = category;
+        this.currency = currency;
+        this.amount = amount;
+        this.date = date;
+        this.description = description == null ? "" : description;
+        this.timestamp = timestamp;
+        this.prevHash = prevHash == null ? "" : prevHash;
+        this.txHash = txHash;
     }
 
     // Getters
@@ -49,17 +67,15 @@ public class Transaction {
     public String getPrevHash() { return prevHash; }
     public String getTxHash() { return txHash; }
 
-    // --- Hashing ---
-
     private String computeHash() {
         String payload =
                 "id=" + id +
                 "|ts=" + timestamp +
                 "|action=" + action +
-                "|expenseId=" + expenseId +
-                "|category=" + nullSafe(category) +
-                "|currency=" + nullSafe(currency) +
-                "|amount=" + amount +
+                "|exp=" + expenseId +
+                "|cat=" + nullSafe(category) +
+                "|cur=" + nullSafe(currency) +
+                "|amt=" + amount +
                 "|date=" + nullSafe(date) +
                 "|desc=" + nullSafe(description) +
                 "|prev=" + nullSafe(prevHash);
@@ -98,17 +114,8 @@ public class Transaction {
             "  \"prevHash\": \"%s\",\n" +
             "  \"txHash\": \"%s\"\n" +
             "}",
-            id,
-            action,
-            expenseId,
-            category,
-            amount,
-            currency,
-            description == null ? "" : description,
-            date,
-            timestamp,
-            prevHash,
-            txHash
+            id, action, expenseId, category, amount, currency,
+            description == null ? "" : description, date, timestamp, prevHash, txHash
         );
     }
 }

@@ -2,6 +2,7 @@ package com.hivefi;
 
 import com.hivefi.db.ExpenseDAO;
 import com.hivefi.models.Expense;
+import com.hivefi.models.Transaction;
 import com.hivefi.services.LedgerService;
 import com.hivefi.services.FXService;
 
@@ -64,6 +65,7 @@ public class App {
                 System.out.println("  [5] Show total count");
                 System.out.println("  [6] FX: get rate (FROM to TO)");
                 System.out.println("  [7] FX: convert amount (AMOUNT FROM to TO)");
+                System.out.println("  [8] View transaction log");
                 System.out.println("  [0] Exit");
                 System.out.print("Choose: ");
 
@@ -292,6 +294,15 @@ public class App {
         int i = 1;
         for (Expense e : items) {
             System.out.println(i++ + ". " + e.toString());
+        }
+    }
+
+    private static void printTransactions(List<Transaction> txs) {
+        if (txs.isEmpty()) { System.out.println("(no transactions logged yet)"); return; }
+        int i = 1;
+        for (Transaction t : txs) {
+            System.out.println(i++ + ".");
+            System.out.println(t.toString());
         }
     }
 

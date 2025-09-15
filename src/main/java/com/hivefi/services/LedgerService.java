@@ -1,7 +1,9 @@
 package com.hivefi.services;
 
 import com.hivefi.db.ExpenseDAO;
+import com.hivefi.db.TransactionDAO;
 import com.hivefi.models.Expense;
+import com.hivefi.models.Transaction;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -10,9 +12,11 @@ import java.util.Map;
 
 public class LedgerService {
     private final ExpenseDAO dao;
+    private final TransactionDAO txDao;
 
     public LedgerService(ExpenseDAO dao) {
         this.dao = dao;
+        this.txDao = new TransactionDAO();
     }
 
     public Expense recordExpense(String category,
@@ -29,6 +33,11 @@ public class LedgerService {
         }
         Expense e = new Expense(category, currency, amount, description, dateDisplay);
         dao.insert(e);
+
+        String prev = txDao.lastHash();
+        Transaction t = new Transaction(Transaction.Action.CREATE, e, prev);
+        txDao.append(t);
+
         return e;
     }
 
@@ -52,6 +61,10 @@ public class LedgerService {
                .merge(e.getCurrency(), e.getAmount(), Double::sum);
         }
         return out;
+    }
+
+    public List<Transaction> transactions() {
+        return txDao.findAll();
     }
 
     public int count() {
