@@ -1,0 +1,15 @@
+plugins { id 'java'; id 'application' }
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(17) } }
+
+application { mainClass = 'com.hivefi.App' }
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    compileOnly  'org.jetbrains:annotations:24.1.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+tasks.named('test'){ useJUnitPlatform() }
