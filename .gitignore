@@ -4,3 +4,14 @@
 
 # Ignore Gradle build output directory
 build
+
+#local data 
+hivefi.db
+*.db
+
+*.log
+
+out/
+*.class
+.vscode/
+gradle-home/

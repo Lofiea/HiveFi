@@ -1,15 +1,46 @@
-plugins { id 'java'; id 'application' }
+plugins { 
+    id 'java'; 
+    id 'application' 
+}
 
-java { toolchain { languageVersion = JavaLanguageVersion.of(17) } }
+java { 
+    toolchain { 
+        languageVersion = JavaLanguageVersion.of(17) 
+    } 
+}
 
-application { mainClass = 'com.hivefi.App' }
+application { 
+    mainClass = 'com.hivefi.App' 
+}
 
-repositories { mavenCentral() }
+repositories { 
+    mavenCentral() 
+}
 
 dependencies {
     implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    implementation 'org.slf4j:slf4j-simple:2.0.13'
     compileOnly  'org.jetbrains:annotations:24.1.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
 }
-tasks.named('test'){ useJUnitPlatform() }
+
+sourceSets { 
+    main { 
+        java.srcDirs = ['src/main/java']
+        resources.srcDirs = ['src/main/resources']
+    }
+    test { 
+        java.srcDirs = ['src/test/java']
+        resources.srcDirs = ['src/test/resources']
+    }
+}
+
+tasks.named('run') {
+    standardInput = System.in 
+}
+
+tasks.named('test'){ 
+    useJUnitPlatform() 
+}

@@ -1,4 +1,4 @@
-package main.java.com.hivefi.utils;
+package com.hivefi.utils;
 
 public class UUIDGenerator {
     
