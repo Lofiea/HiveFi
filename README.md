@@ -2,7 +2,7 @@
 
 HiveFi is a Java-based travel budgeting tool that helps users track multi-currency expenses, calculate trip totals in a home currency, and plan better while abroad.
 
-Originally developed as a mini expense tracker in BlueJ during AP CSA (high school), HiveFi has since evolved through multiple iterations into a full-featured budgeting tool with:
+Originally developed as a mini expense tracker during AP CSA (high school), HiveFi has since evolved through multiple iterations into a full-featured budgeting tool with:
 
 SQLite persistence for reliable data storage
 
@@ -56,4 +56,5 @@ HiveFi/
 │       └── utils/...
 └── README.md
 ```
+
 
